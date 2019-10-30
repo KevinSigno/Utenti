@@ -1,5 +1,9 @@
+//CONTROLLO EMAIL
 export class Email { }
 
+
+
+//CONTROLLO TELEFONO
 export class Telefono {
     constructor(private numeroInserito: String, private prefisso?: String, private num?: String) { }
     validateNumber() {
@@ -31,6 +35,7 @@ export class Telefono {
 
 
 
+//CONTROLLO CODICEFISCALE
 export class CF {
     constructor(private codiceFiscale: String) { }
 
