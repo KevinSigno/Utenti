@@ -17,7 +17,7 @@ export class UtenteGenerico implements Utente {
     privacy: boolean = false;
 
     constructor(email: string, privacy: boolean) {
-        this.email = new Email(email);
+        this.email = new Email();
         this.privacy = privacy;
     }
 }

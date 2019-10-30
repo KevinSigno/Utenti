@@ -3,7 +3,6 @@ import { Telefono } from "../Validazioni/validazioni";
 
 export class UtenteInteressato extends UtenteGenerico {
 
-
     nome: string = "";
     cognome: string = "";
     telefono: Telefono;
