@@ -1,64 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Email = /** @class */ (function () {
-    function Email(email) {
-        this.email = email;
-        this.email = email.validate(email);
+    function Email() {
     }
-    Email.prototype.setEmail = function (email) {
-        this.email = email.validate(email);
-    };
-    Email.prototype.getEmail = function () {
-        return this.email;
-    };
-    Email.prototype.validate = function (email) {
-        var mailpattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    };
     return Email;
 }());
 exports.Email = Email;
 var Telefono = /** @class */ (function () {
-    function Telefono(telefono, prefix, number) {
-        this.telefono = telefono;
-        this.prefix = prefix;
-        this.number = number;
+    function Telefono(numeroInserito, prefisso, num) {
+        this.numeroInserito = numeroInserito;
+        this.prefisso = prefisso;
+        this.num = num;
     }
-    Object.defineProperty(Telefono.prototype, "getPrefix", {
-        get: function () {
-            return this.prefix;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Telefono.prototype, "getNumber", {
-        get: function () {
-            return this.number;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Telefono.prototype.validate = function () {
-        if (this.telefono.charAt(0) === '+') {
-            this.prefix = this.telefono.slice(0, 3);
-            for (var i = 3; i < this.telefono.length; i++) {
-                if (isNaN(Number(this.telefono.charAt(i)))) {
-                    console.log("Errore nell'inserimento");
+    Telefono.prototype.validateNumber = function () {
+        if (this.numeroInserito.charAt(0) === "+") { //Se il primo carattere del numero inserito e "+"
+            this.prefisso = this.numeroInserito.slice(0, 3); //Assegna a prefisso la copia dei primi 3 caratteri del numero inserito.
+            for (var i = 3; i < this.numeroInserito.length; i++) {
+                if (isNaN(Number(this.numeroInserito.charAt(i)))) {
+                    console.log("Errore nel prefisso");
                     return false;
                 }
             }
-            this.number = this.telefono.slice(3, this.telefono.length);
-            console.log(this.prefix + " - " + this.number);
+            this.num = this.numeroInserito.slice(3, this.numeroInserito.length);
+            console.log(this.prefisso + " - " + this.num);
             return true;
         }
         else {
-            for (var i = 0; i < this.telefono.length; i++) {
-                if (isNaN(Number(this.telefono.charAt(i)))) {
-                    console.log("Errore nell'inserimento");
+            for (var i = 0; i < this.numeroInserito.length; i++) {
+                if (isNaN(Number(this.numeroInserito.charAt(i)))) {
+                    console.log("Errore nel numero inserito");
                     return false;
                 }
             }
-            this.number = this.telefono.slice(0, this.telefono.length);
-            this.prefix === undefined ? console.log("Prefisso non inserito - " + this.number) : console.log(this.prefix + " - " + this.number);
+            this.num = this.numeroInserito.slice(0, this.numeroInserito.length);
+            this.prefisso === undefined ? console.log("Prefisso non inserito per questo numero: " + this.num) : console.log(this.prefisso + " - " + this.num);
             return true;
         }
     };
@@ -66,25 +41,43 @@ var Telefono = /** @class */ (function () {
 }());
 exports.Telefono = Telefono;
 var CF = /** @class */ (function () {
-    function CF(cf) {
-        this.cf = cf;
+    function CF(codiceFiscale) {
+        this.codiceFiscale = codiceFiscale;
     }
-    Object.defineProperty(CF.prototype, "getcf", {
-        get: function () {
-            return this.cf;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    CF.prototype.validate = function () {
-        var pattern = /^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$/;
-        if (pattern.test(this.cf)) {
-            console.log("trueeeee");
-            return true;
+    CF.prototype.validateCodiceFiscale = function () {
+        var i, cf = this.codiceFiscale, set1, set2, setpari, setdispari, s, caratterivalidi;
+        if (cf == '') {
+            console.log("Errore: Devi inserire un codice fiscale");
+            return false;
+        }
+        cf = cf.toUpperCase();
+        if (cf.length != 16) { //Controlla se il numero di caratteri e diverso da 16
+            console.log("Errore: Il codice fiscale deve essere di 16 caratteri: " + this.codiceFiscale);
+            return false;
+        }
+        caratterivalidi = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        for (i = 0; i < 16; i++) {
+            if (caratterivalidi.indexOf(cf.charAt(i)) == -1) {
+                console.log("Errore: Questo codice fiscale contiene caratteri non validi: " + this.codiceFiscale);
+                return false;
+            }
+        }
+        set1 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        set2 = "ABCDEFGHIJABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        setpari = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        setdispari = "BAKPLCQDREVOSFTGUHMINJWZYX";
+        s = 0;
+        for (i = 1; i <= 13; i += 2)
+            s += setpari.indexOf(set2.charAt(set1.indexOf(cf.charAt(i))));
+        for (i = 0; i <= 14; i += 2)
+            s += setdispari.indexOf(set2.charAt(set1.indexOf(cf.charAt(i))));
+        if (s % 26 != cf.charCodeAt(15) - 'A'.charCodeAt(0)) {
+            console.log("Codice fiscale invalido: " + this.codiceFiscale);
+            return false;
         }
         else {
-            console.log("falseeee");
-            return false;
+            console.log("Codice fiscale corretto: " + this.codiceFiscale);
+            return true;
         }
     };
     return CF;
