@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+//CONTROLLO EMAIL
 var Email = /** @class */ (function () {
     function Email() {
     }
     return Email;
 }());
 exports.Email = Email;
+//CONTROLLO TELEFONO
 var Telefono = /** @class */ (function () {
     function Telefono(numeroInserito, prefisso, num) {
         this.numeroInserito = numeroInserito;
@@ -40,6 +42,7 @@ var Telefono = /** @class */ (function () {
     return Telefono;
 }());
 exports.Telefono = Telefono;
+//CONTROLLO CODICEFISCALE
 var CF = /** @class */ (function () {
     function CF(codiceFiscale) {
         this.codiceFiscale = codiceFiscale;
