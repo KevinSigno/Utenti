@@ -1,4 +1,4 @@
-import {Telefono, Email, CF} from "./validazioni";
+import {Telefono, Email, CF} from "../Validazioni/validazioni";
 
 
 
