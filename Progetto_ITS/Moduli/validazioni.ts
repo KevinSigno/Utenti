@@ -30,88 +30,88 @@ export class Email {
 }
 
 
+
+
 //controllo telefono
-export class Telefono{
-    constructor(private tel: string){
-        this.tel=this.validate(tel);
+export class Telefono {
+    constructor(private tel: string) {
+        this.tel = this.validate(tel);
     }
 
-
-    public setTelefono(tel:string){
-        this.tel=this.validate(tel);
+    public setTelefono(tel: string) {
+        this.tel = this.validate(tel);
     }
-    public getTelefono(){
+
+    public getTelefono() {
         return this.tel;
     }
-    
 
-    private validate(tel:string){
+    private validate(tel: string) {
         if (tel === "" || tel === null)
-        //controllo se il numero è statto inserito 
-        throw new Error("Phone number missing");
+            //controllo se il numero è statto inserito 
+            throw new Error("Numero non inserito.");
 
-    if (tel.length <12 || tel.length >12 )
-        //Controllo la lunghezza del numero inserito
-        throw new Error("This is not a phone number");
+        if (tel.length < 12 || tel.length > 12)
+            //Controllo la lunghezza del numero inserito
+            throw new Error("Il numero inserito deve essere di 12 cifre.");
 
-    if (tel.slice(0, 3) !== "+39")
-       //controllo sul prefix
-        throw new Error("Missing +");
-    
-    return tel;
+        if (tel.slice(0, 3) !== "+39")
+            //controllo sul prefix
+            throw new Error("Prefisso non valido.");
 
-        
-        
+        return tel;
     }
 }
 
+
+
+
 //controllo codice fiscale
-export class CF{
-    constructor(private cf:string){
-        this.cf=this.validate(cf);
+export class CF {
+    constructor(private cf: string) {
+        this.cf = this.validate(cf);
     }
-    public setCf(cf:string){
-        this.cf=this.validate(cf);
+    public setCf(cf: string) {
+        this.cf = this.validate(cf);
     }
 
-    private validate(cf:string){
+    private validate(cf: string) {
         const cfPattern = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i;
         //controllo se il codice fiscale è stato inserito
-        if (cf==="" || cf=== null){
-            throw new Error("Codice Fiscale is missing")
+        if (cf === "" || cf === null) {
+            throw new Error("Codice Fiscale non inserito.")
         }
 
         //matcho il codice fiscale insrito con il pattern const cfPattern = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i;
-        if (cf.match(cfPattern) == null){
-            throw new Error("Wrong characters");
+        if (cf.match(cfPattern) == null) {
+            throw new Error("Il Codice Fiscale inserito non e' valido.");
         }
         return cf;
-
     }
 }
 
+
+
+
 //Controllo voti
-export class Voti{
+export class Voti {
 
     private votoOrale: number;
     private votoScritto: number;
     private votoTotale: number;
 
-    constructor(voti:Array<number>){
-        this.votoOrale=this.validate(voti[0]);
-        this.votoScritto=this.validate(voti[1])
-        this.votoTotale=(this.votoOrale+this.votoScritto)/2;
+    constructor(voti: Array<number>) {
+        this.votoOrale = this.validate(voti[0]);
+        this.votoScritto = this.validate(voti[1])
+        this.votoTotale = (this.votoOrale + this.votoScritto) / 2;
     }
-    public getVoto(){
+    public getVoto() {
         return this.votoTotale;
     }
-    private validate(voto:number){
-        if(voto=== null || isNaN(voto) || voto<1 || voto >10){
-            throw new Error("This is not a correct rate");
+    private validate(voto: number) {
+        if (voto === null || isNaN(voto) || voto < 1 || voto > 10) {
+            throw new Error("Questo valutazione non è valida.");
         }
         return voto;
     }
-
-
 }
-    
