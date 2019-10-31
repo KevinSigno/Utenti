@@ -1,34 +1,30 @@
 //CONTROLLO EMAIL
 export class Email {
 
-     //vincolato ad Email
-     private email: string;
-     constructor(e: string) {
-         this.email = this.validate(e);
-     }
-     public setEmail(e: string) {
-         this.email = this.validate(e);
-     }
-     public getEmail() {
-         return this.email;
-     }
-     //controllo Email
-     private validate(e: string): string {
-         const mailParam = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-         if (e === "" || e === null)
-             //se vuoto o null
-             throw new Error("Email Vuota");
-         if (e.match(mailParam) == null)
-             //match parametri
-             throw new Error("Formato Email non valido");
-         let domain = e.split("@")[1]; //splitto email con limite e passo da stringa ad array di stringhe
-         if (domain.split(".")[1] !== "com" && domain.split(".")[1] !== "it")
-             //condizione: se il TLD splittato, che si trova in posizione 1 del mio Array di stringhe non è ammesso lancio errore
-             throw new Error("Email non valida");
-         return e;
-     }
- }
- 
+    private email: string;
+    constructor(emailInserita: string) {
+        this.email = this.validate(emailInserita);
+    }
+    public setEmail(emailInserita: string) {
+        this.email = this.validate(emailInserita);
+    }
+    public getEmail() {
+        return this.email;
+    }
+    //controllo Email
+    private validate(emailInserita: string): string {
+        const caratteri = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        //Controlla se è vuoto o null
+        if (emailInserita === "" || emailInserita === null)
+            console.log("Devi inserire una email.");
+        if (emailInserita.match(caratteri) == null)
+            console.log("La mail inserita contiene caratteri non validi.");
+        let dominioEmail = emailInserita.split("@")[1];
+        if (dominioEmail.split(".")[1] !== "com" && dominioEmail.split(".")[1] !== "it")
+            console.log("Il dominio della email deve essere .com oppure .it");
+        return emailInserita;
+    }
+}
 
 
 
@@ -36,7 +32,7 @@ export class Email {
 export class Telefono {
     constructor(private numeroInserito: String, private prefisso?: String, private num?: String) { }
     validateNumber() {
-        if (this.numeroInserito.charAt(0) === "+") { //Se il primo carattere del numero inserito e "+"
+        if (this.numeroInserito.charAt(0) === "+") { //Se il primo carattere del numero inserito emailInserita "+"
             this.prefisso = this.numeroInserito.slice(0, 3); //Assegna a prefisso la copia dei primi 3 caratteri del numero inserito.
             for (let i = 3; i < this.numeroInserito.length; i++) {
                 if (isNaN(Number(this.numeroInserito.charAt(i)))) {
@@ -78,7 +74,7 @@ export class CF {
         }
 
         cf = cf.toUpperCase();
-        if (cf.length != 16) { //Controlla se il numero di caratteri e diverso da 16
+        if (cf.length != 16) { //Controlla se il numero di caratteri emailInserita diverso da 16
             console.log("Errore: Il codice fiscale deve essere di 16 caratteri: " + this.codiceFiscale);
             return false;
         }
