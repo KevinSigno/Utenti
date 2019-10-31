@@ -30,82 +30,88 @@ export class Email {
 }
 
 
+//controllo telefono
+export class Telefono{
+    constructor(private tel: string){
+        this.tel=this.validate(tel);
+    }
 
-//CONTROLLO TELEFONO
-export class Telefono {
-    constructor(private numeroIntero: String, private prefisso?: String, private numero?: String) { }
-    validateNumber() {
-        if (this.numeroIntero.charAt(0) === "+") { //Se il primo carattere del numero intero è "+"
-            this.prefisso = this.numeroIntero.slice(0, 3);//Assegno a prefisso i primi 3 caratteri del numero intero
-            for (let i = 3; i < this.numeroIntero.length; i++) {
-                if (isNaN(Number(this.numeroIntero.charAt(i)))) {
-                    console.log("Errore nel prefisso");
-                    return false;
-                }
-            }
-            this.numero = this.numeroIntero.slice(3, this.numeroIntero.length)
-            console.log(this.prefisso + " - " + this.numero);
-            return true
-        }
-        else {
-            for (let i = 0; i < this.numeroIntero.length; i++) {
-                if (isNaN(Number(this.numeroIntero.charAt(i)))) {
-                    console.log("Errore nel numero inserito");
-                    return false;
-                }
-            }
-            this.numero = this.numeroIntero.slice(0, this.numeroIntero.length);
-            this.prefisso === undefined ? console.log("Prefisso non inserito per questo numero: " + this.numero) : console.log(this.prefisso + " - " + this.numero);
-            return true;
-        }
+
+    public setTelefono(tel:string){
+        this.tel=this.validate(tel);
+    }
+    public getTelefono(){
+        return this.tel;
+    }
+    
+
+    private validate(tel:string){
+        if (tel === "" || tel === null)
+        //controllo se il numero è statto inserito 
+        throw new Error("Phone number missing");
+
+    if (tel.length <12 || tel.length >12 )
+        //Controllo la lunghezza del numero inserito
+        throw new Error("This is not a phone number");
+
+    if (tel.slice(0, 3) !== "+39")
+       //controllo sul prefix
+        throw new Error("Missing +");
+    
+    return tel;
+
+        
+        
     }
 }
 
+//controllo codice fiscale
+export class CF{
+    constructor(private cf:string){
+        this.cf=this.validate(cf);
+    }
+    public setCf(cf:string){
+        this.cf=this.validate(cf);
+    }
 
-
-//CONTROLLO CODICEFISCALE
-export class CF {
-    constructor(private codiceFiscale: String) { }
-
-    validateCodiceFiscale() {
-
-        let i, cf = this.codiceFiscale, set1, set2, setpari, setdispari, s, caratterivalidi;
-
-        if (cf == '') {
-            console.log("Errore: Devi inserire un codice fiscale");
-            return false;
+    private validate(cf:string){
+        const cfPattern = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i;
+        //controllo se il codice fiscale è stato inserito
+        if (cf==="" || cf=== null){
+            throw new Error("Codice Fiscale is missing")
         }
 
-        cf = cf.toUpperCase();
-        if (cf.length != 16) { //Controlla se il numero di caratteri emailInserita diverso da 16
-            console.log("Errore: Il codice fiscale deve essere di 16 caratteri: " + this.codiceFiscale);
-            return false;
+        //matcho il codice fiscale insrito con il pattern const cfPattern = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i;
+        if (cf.match(cfPattern) == null){
+            throw new Error("Wrong characters");
         }
+        return cf;
 
-        caratterivalidi = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        for (i = 0; i < 16; i++) {
-            if (caratterivalidi.indexOf(cf.charAt(i)) == -1) {
-                console.log("Errore: Questo codice fiscale contiene caratteri non validi: " + this.codiceFiscale);
-                return false;
-            }
-        }
-
-        set1 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        set2 = "ABCDEFGHIJABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        setpari = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        setdispari = "BAKPLCQDREVOSFTGUHMINJWZYX";
-        s = 0;
-        for (i = 1; i <= 13; i += 2)
-            s += setpari.indexOf(set2.charAt(set1.indexOf(cf.charAt(i))));
-        for (i = 0; i <= 14; i += 2)
-            s += setdispari.indexOf(set2.charAt(set1.indexOf(cf.charAt(i))));
-
-        if (s % 26 != cf.charCodeAt(15) - 'A'.charCodeAt(0)) {
-            console.log("Codice fiscale invalido: " + this.codiceFiscale);
-            return false;
-        } else {
-            console.log("Codice fiscale corretto: " + this.codiceFiscale);
-            return true;
-        }
     }
 }
+
+//Controllo voti
+export class Voti{
+
+    private votoOrale: number;
+    private votoScritto: number;
+    private votoTotale: number;
+
+    constructor(voti:Array<number>){
+        this.votoOrale=this.validate(voti[0]);
+        this.votoScritto=this.validate(voti[1])
+        this.votoTotale=(this.votoOrale+this.votoScritto)/2;
+    }
+    public getVoto(){
+        return this.votoTotale;
+    }
+    private validate(voto:number){
+        if(voto=== null || isNaN(voto) || voto<1 || voto >10){
+            throw new Error("This is not a correct rate");
+        }
+        return voto;
+    }
+
+
+}
+    
