@@ -11,7 +11,7 @@ export class Email {
     public getEmail() {
         return this.email;
     }
-    //controllo Email
+
     private validate(emailInserita: string): string {
         const caratteri = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         //Controlla se è vuoto o null
@@ -24,7 +24,7 @@ export class Email {
         let dominioEmail = emailInserita.split("@")[1];
         if (dominioEmail.split(".")[1] !== "com" && dominioEmail.split(".")[1] !== "it")
             console.log("Il dominio della email deve essere .com oppure .it");
-            
+
         return emailInserita;
     }
 }
@@ -33,29 +33,29 @@ export class Email {
 
 //CONTROLLO TELEFONO
 export class Telefono {
-    constructor(private numeroInserito: String, private prefisso?: String, private num?: String) { }
+    constructor(private numeroIntero: String, private prefisso?: String, private numero?: String) { }
     validateNumber() {
-        if (this.numeroInserito.charAt(0) === "+") { //Se il primo carattere del numero inserito emailInserita "+"
-            this.prefisso = this.numeroInserito.slice(0, 3); //Assegna a prefisso la copia dei primi 3 caratteri del numero inserito.
-            for (let i = 3; i < this.numeroInserito.length; i++) {
-                if (isNaN(Number(this.numeroInserito.charAt(i)))) {
+        if (this.numeroIntero.charAt(0) === "+") { //Se il primo carattere del numero intero è "+"
+            this.prefisso = this.numeroIntero.slice(0, 3);//Assegno a prefisso i primi 3 caratteri del numero intero
+            for (let i = 3; i < this.numeroIntero.length; i++) {
+                if (isNaN(Number(this.numeroIntero.charAt(i)))) {
                     console.log("Errore nel prefisso");
                     return false;
                 }
             }
-            this.num = this.numeroInserito.slice(3, this.numeroInserito.length)
-            console.log(this.prefisso + " - " + this.num);
+            this.numero = this.numeroIntero.slice(3, this.numeroIntero.length)
+            console.log(this.prefisso + " - " + this.numero);
             return true
         }
         else {
-            for (let i = 0; i < this.numeroInserito.length; i++) {
-                if (isNaN(Number(this.numeroInserito.charAt(i)))) {
+            for (let i = 0; i < this.numeroIntero.length; i++) {
+                if (isNaN(Number(this.numeroIntero.charAt(i)))) {
                     console.log("Errore nel numero inserito");
                     return false;
                 }
             }
-            this.num = this.numeroInserito.slice(0, this.numeroInserito.length);
-            this.prefisso === undefined ? console.log("Prefisso non inserito per questo numero: " + this.num) : console.log(this.prefisso + " - " + this.num);
+            this.numero = this.numeroIntero.slice(0, this.numeroIntero.length);
+            this.prefisso === undefined ? console.log("Prefisso non inserito per questo numero: " + this.numero) : console.log(this.prefisso + " - " + this.numero);
             return true;
         }
     }
