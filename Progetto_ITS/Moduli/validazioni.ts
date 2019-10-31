@@ -17,11 +17,14 @@ export class Email {
         //Controlla se è vuoto o null
         if (emailInserita === "" || emailInserita === null)
             console.log("Devi inserire una email.");
+
         if (emailInserita.match(caratteri) == null)
             console.log("La mail inserita contiene caratteri non validi.");
+
         let dominioEmail = emailInserita.split("@")[1];
         if (dominioEmail.split(".")[1] !== "com" && dominioEmail.split(".")[1] !== "it")
             console.log("Il dominio della email deve essere .com oppure .it");
+            
         return emailInserita;
     }
 }
