@@ -2,110 +2,98 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 //CONTROLLO EMAIL
 var Email = /** @class */ (function () {
-    function Email(e) {
-        this.email = this.validate(e);
+    function Email(emailInserita) {
+        this.email = this.validate(emailInserita);
     }
-    Email.prototype.setEmail = function (e) {
-        this.email = this.validate(e);
+    Email.prototype.setEmail = function (emailInserita) {
+        this.email = this.validate(emailInserita);
     };
     Email.prototype.getEmail = function () {
         return this.email;
     };
-    //controllo Email
-    Email.prototype.validate = function (e) {
-        var mailParam = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (e === "" || e === null)
-            //se vuoto o null
-            throw new Error("Email Vuota");
-        if (e.match(mailParam) == null)
-            //match parametri
-            throw new Error("Formato Email non valido");
-        var domain = e.split("@")[1]; //splitto email con limite e passo da stringa ad array di stringhe
-        if (domain.split(".")[1] !== "com" && domain.split(".")[1] !== "it")
-            //condizione: se il TLD splittato, che si trova in posizione 1 del mio Array di stringhe non è ammesso lancio errore
-            throw new Error("Email non valida");
-        return e;
+    Email.prototype.validate = function (emailInserita) {
+        var caratteri = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        //Controlla se è vuoto o null
+        if (emailInserita === "" || emailInserita === null)
+            console.log("Devi inserire una email.");
+        if (emailInserita.match(caratteri) == null)
+            console.log("La mail inserita contiene caratteri non validi.");
+        var dominioEmail = emailInserita.split("@")[1];
+        if (dominioEmail.split(".")[1] !== "com" && dominioEmail.split(".")[1] !== "it")
+            console.log("Il dominio della email deve essere .com oppure .it");
+        return emailInserita;
     };
     return Email;
 }());
 exports.Email = Email;
-//CONTROLLO TELEFONO
+//controllo telefono
 var Telefono = /** @class */ (function () {
-    function Telefono(numeroInserito, prefisso, num) {
-        this.numeroInserito = numeroInserito;
-        this.prefisso = prefisso;
-        this.num = num;
+    function Telefono(tel) {
+        this.tel = tel;
+        this.tel = this.validate(tel);
     }
-    Telefono.prototype.validateNumber = function () {
-        if (this.numeroInserito.charAt(0) === "+") { //Se il primo carattere del numero inserito e "+"
-            this.prefisso = this.numeroInserito.slice(0, 3); //Assegna a prefisso la copia dei primi 3 caratteri del numero inserito.
-            for (var i = 3; i < this.numeroInserito.length; i++) {
-                if (isNaN(Number(this.numeroInserito.charAt(i)))) {
-                    console.log("Errore nel prefisso");
-                    return false;
-                }
-            }
-            this.num = this.numeroInserito.slice(3, this.numeroInserito.length);
-            console.log(this.prefisso + " - " + this.num);
-            return true;
-        }
-        else {
-            for (var i = 0; i < this.numeroInserito.length; i++) {
-                if (isNaN(Number(this.numeroInserito.charAt(i)))) {
-                    console.log("Errore nel numero inserito");
-                    return false;
-                }
-            }
-            this.num = this.numeroInserito.slice(0, this.numeroInserito.length);
-            this.prefisso === undefined ? console.log("Prefisso non inserito per questo numero: " + this.num) : console.log(this.prefisso + " - " + this.num);
-            return true;
-        }
+    Telefono.prototype.setTelefono = function (tel) {
+        this.tel = this.validate(tel);
+    };
+    Telefono.prototype.getTelefono = function () {
+        return this.tel;
+    };
+    Telefono.prototype.validate = function (tel) {
+        if (tel === "" || tel === null)
+            //controllo se il numero è statto inserito 
+            throw new Error("Numero non inserito.");
+        if (tel.length < 12 || tel.length > 12)
+            //Controllo la lunghezza del numero inserito
+            throw new Error("Il numero inserito deve essere di 12 cifre.");
+        if (tel.slice(0, 3) !== "+39")
+            //controllo sul prefix
+            throw new Error("Prefisso non valido.");
+        return tel;
     };
     return Telefono;
 }());
 exports.Telefono = Telefono;
-//CONTROLLO CODICEFISCALE
+//controllo codice fiscale
 var CF = /** @class */ (function () {
-    function CF(codiceFiscale) {
-        this.codiceFiscale = codiceFiscale;
+    function CF(cf) {
+        this.cf = cf;
+        this.cf = this.validate(cf);
     }
-    CF.prototype.validateCodiceFiscale = function () {
-        var i, cf = this.codiceFiscale, set1, set2, setpari, setdispari, s, caratterivalidi;
-        if (cf == '') {
-            console.log("Errore: Devi inserire un codice fiscale");
-            return false;
+    CF.prototype.setCf = function (cf) {
+        this.cf = this.validate(cf);
+    };
+    CF.prototype.validate = function (cf) {
+        var cfPattern = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i;
+        //controllo se il codice fiscale è stato inserito
+        if (cf === "" || cf === null) {
+            throw new Error("Codice Fiscale non inserito.");
         }
-        cf = cf.toUpperCase();
-        if (cf.length != 16) { //Controlla se il numero di caratteri e diverso da 16
-            console.log("Errore: Il codice fiscale deve essere di 16 caratteri: " + this.codiceFiscale);
-            return false;
+        //matcho il codice fiscale insrito con il pattern const cfPattern = /^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i;
+        if (cf.match(cfPattern) == null) {
+            throw new Error("Il Codice Fiscale inserito non e' valido.");
         }
-        caratterivalidi = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        for (i = 0; i < 16; i++) {
-            if (caratterivalidi.indexOf(cf.charAt(i)) == -1) {
-                console.log("Errore: Questo codice fiscale contiene caratteri non validi: " + this.codiceFiscale);
-                return false;
-            }
-        }
-        set1 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        set2 = "ABCDEFGHIJABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        setpari = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        setdispari = "BAKPLCQDREVOSFTGUHMINJWZYX";
-        s = 0;
-        for (i = 1; i <= 13; i += 2)
-            s += setpari.indexOf(set2.charAt(set1.indexOf(cf.charAt(i))));
-        for (i = 0; i <= 14; i += 2)
-            s += setdispari.indexOf(set2.charAt(set1.indexOf(cf.charAt(i))));
-        if (s % 26 != cf.charCodeAt(15) - 'A'.charCodeAt(0)) {
-            console.log("Codice fiscale invalido: " + this.codiceFiscale);
-            return false;
-        }
-        else {
-            console.log("Codice fiscale corretto: " + this.codiceFiscale);
-            return true;
-        }
+        return cf;
     };
     return CF;
 }());
 exports.CF = CF;
+//Controllo voti
+var Voti = /** @class */ (function () {
+    function Voti(voti) {
+        this.votoOrale = this.validate(voti[0]);
+        this.votoScritto = this.validate(voti[1]);
+        this.votoTotale = (this.votoOrale + this.votoScritto) / 2;
+    }
+    Voti.prototype.getVoto = function () {
+        return this.votoTotale;
+    };
+    Voti.prototype.validate = function (voto) {
+        if (voto === null || isNaN(voto) || voto < 1 || voto > 10) {
+            throw new Error("Questo valutazione non è valida.");
+        }
+        return voto;
+    };
+    return Voti;
+}());
+exports.Voti = Voti;
 //# sourceMappingURL=validazioni.js.map

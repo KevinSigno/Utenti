@@ -1,15 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-//import modulo Users
 var Utente_1 = require("./Utente");
-//creo new Users
-var User = new Utente_1.utente.UtenteVoti("mario@gmail.com", "mario", "rossi", true, "+39113467876", "MROSSI80A01E801W", 8, 9);
-var User2 = new Utente_1.utente.UtenteVoti("luca@gmail.com", "luca", "verdi", true, "+39123367829", "LCAVRD80A01E801W", 9, 10);
-var User3 = new Utente_1.utente.UtenteVoti("fede@gmail.com", "federico", "bianchi", true, "+39125067832", "FDEBCI80A01E809Z", 15, 16);
-//creo array di Users
-var groupUsers = [];
-//push Users in array groupUsers
-groupUsers.push(User);
-groupUsers.push(User2);
-groupUsers.push(User3);
+//creo il primo utente
+var primoUtente = new Utente_1.utente.UtenteVoti("kevin@gmail.com", "kevin", "signo", true, "+393341704418", "SGNKVN99A14I690P", 8, 9);
+//creo il secondo utente
+var secondoUtente = new Utente_1.utente.UtenteVoti("ezio.raciti@gmail.com", "ezio", "raciti", true, "+393936888453", "RCTZEI98E14F255H", 9, 10);
+//creo il terzo utente
+var terzoUtente = new Utente_1.utente.UtenteVoti("agli.hoxha@gmail.com", "agli", "hoxha", true, "+391250678320", "HXHGLA96E20Z100C", 15, 16);
+//creo l'array di utenti
+var gruppoUtenti = [];
+//Inserisco all'interno dell'array i 3 utenti
+gruppoUtenti.push(primoUtente);
+gruppoUtenti.push(secondoUtente);
+gruppoUtenti.push(terzoUtente);
 //# sourceMappingURL=controller.js.map
