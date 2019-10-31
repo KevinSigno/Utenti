@@ -1,8 +1,6 @@
-//import modulo Users
 import { utente } from "./Utente";
 
-//creo new Users
-
+//creo il primo utente
 let primoUtente = new utente.UtenteVoti(
     "kevin@gmail.com",
     "kevin",
@@ -14,6 +12,8 @@ let primoUtente = new utente.UtenteVoti(
     9
 
 );
+
+//creo il secondo utente
 let secondoUtente = new utente.UtenteVoti(
     "ezio.raciti@gmail.com",
     "ezio",
@@ -24,6 +24,8 @@ let secondoUtente = new utente.UtenteVoti(
     9,
     10
 );
+
+//creo il terzo utente
 let terzoUtente = new utente.UtenteVoti(
     "agli.hoxha@gmail.com",
     "agli",
@@ -35,11 +37,11 @@ let terzoUtente = new utente.UtenteVoti(
     16
 );
 
-//creo array di Users
-let groupUsers: any = [];
+//creo l'array di utenti
+let gruppoUtenti: any = [];
 
-//push Users in array groupUsers
-groupUsers.push(primoUtente);
-groupUsers.push(secondoUtente);
-groupUsers.push(terzoUtente);
+//Inserisco all'interno dell'array i 3 utenti
+gruppoUtenti.push(primoUtente);
+gruppoUtenti.push(secondoUtente);
+gruppoUtenti.push(terzoUtente);
 
