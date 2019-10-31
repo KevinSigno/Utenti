@@ -2,8 +2,30 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 //CONTROLLO EMAIL
 var Email = /** @class */ (function () {
-    function Email() {
+    function Email(e) {
+        this.email = this.validate(e);
     }
+    Email.prototype.setEmail = function (e) {
+        this.email = this.validate(e);
+    };
+    Email.prototype.getEmail = function () {
+        return this.email;
+    };
+    //controllo Email
+    Email.prototype.validate = function (e) {
+        var mailParam = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (e === "" || e === null)
+            //se vuoto o null
+            throw new Error("Email Vuota");
+        if (e.match(mailParam) == null)
+            //match parametri
+            throw new Error("Formato Email non valido");
+        var domain = e.split("@")[1]; //splitto email con limite e passo da stringa ad array di stringhe
+        if (domain.split(".")[1] !== "com" && domain.split(".")[1] !== "it")
+            //condizione: se il TLD splittato, che si trova in posizione 1 del mio Array di stringhe non è ammesso lancio errore
+            throw new Error("Email non valida");
+        return e;
+    };
     return Email;
 }());
 exports.Email = Email;
